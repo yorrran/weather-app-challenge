@@ -1,0 +1,53 @@
+.today-weather-wrapper {
+  width: 100%;
+  padding: 20px;
+  border-color: #ffffff;
+  background-color: #ffffff;
+  border-radius: 20px;
+  .today-weather-title {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+  }
+  .today-weather-middle {
+    display: flex;
+    flex-direction: row;
+    width: 80%;
+    justify-content: space-between;
+    .weather-icon {
+      width: 10rem;
+      height: auto;
+    }
+    .weather-information {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      .weather-degree {
+        font-size: 50px;
+        font-weight: bold;
+      }
+      .weather-description {
+        font-size: 25px;
+      }
+    }
+  }
+  .today-weather-bottom {
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    .list-item-wrapper {
+      display: flex;
+      flex-direction: column;
+      .list-item-title {
+        color: #8c8c8c;
+        line-height: 25px;
+      }
+      .list-item-value {
+        font-size: 20px;
+        font-weight: bold;
+      }
+    }
+  }
+}

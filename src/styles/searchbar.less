@@ -1,0 +1,75 @@
+.search-bar-container {
+  margin-top: 26px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin: 10px auto;
+  .location-logo {
+    width: 35px;
+    height: auto;
+  }
+  .ant-input-affix-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 5px 11px;
+    border-color: transparent;
+    &::before {
+      height: 0px;
+    }
+    .ant-input-prefix {
+      color: rgba(102, 102, 102, 0.4);
+      font-size: 10px;
+    }
+    .ant-input {
+      font-size: 16px;
+    }
+  }
+  .ant-btn {
+    margin-left: 1%;
+    font-size: 30px;
+    width: 50px;
+    height: 50px;
+    line-height: 0px;
+    .ant-btn-icon {
+      color: #000000;
+      .anticon {
+        font-size: 25px;
+      }
+    }
+  }
+  .ant-btn:hover {
+    background: transparent !important;
+    color: #000000;
+  }
+  &.dark {
+    .ant-input-affix-wrapper {
+      background: rgba(26, 26, 26, 0.5);
+      border-color: rgba(26, 26, 26, 0.5);
+      .ant-input-prefix {
+        color: rgba(255, 255, 255, 0.4);
+        font-size: 10px;
+      }
+      .ant-input {
+        color: #ffffff;
+      }
+    }
+    .ant-btn {
+      background-color: #28124d;
+      border-color: #28124d;
+    }
+  }
+}
+
+@media screen and (min-width: 641px) {
+  .search-bar-container {
+    width: 50%;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .search-bar-container {
+    width: 90%;
+  }
+}
