@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/stores";
 import { tempConverter, visibilityConverter } from "@/utils/TempConverter";
 import { Spin } from "antd";
-
+import arrow from "@/assets/cc-arrow-up.svg";
 function TodayWeather() {
   const [iconUrl, setIconUrl] = useState("");
   const weatherData = useSelector((state: RootState) => state.weatherSlice);
@@ -26,12 +26,22 @@ function TodayWeather() {
     setIconUrl(weatherUrl);
   }, [weatherData]);
 
+  const getStyle = (degree: number) => {
+    const rotateValue = `rotate(${degree}deg)`;
+    const customStyle = {
+      transform: rotateValue,
+      width: "1rem",
+      height: "1rem",
+    };
+    return customStyle;
+  };
+
   return (
     <div className="today-weather-wrapper">
       <Spin spinning={loading}>
         <span className="today-weather-title">{date}</span>
         <div className="today-weather-middle">
-          <img src={iconUrl} className="weather-icon" />
+          <img src={iconUrl} className="weather-icon" alt="weather-icon" />
           <div className="weather-information">
             <span className="weather-degree">
               {weatherData.main.temp ? tempConverter(weatherData.main.temp) : 0}
@@ -54,7 +64,8 @@ function TodayWeather() {
           <div className="list-item-wrapper">
             <div className="list-item-title">Winds</div>
             <div className="list-item-value">
-              {weatherData.wind.speed ?? 0} m/s
+              <img src={arrow} style={getStyle(weatherData.wind.deg)} alt="arrow-icon" />
+              <span className="list-item-right">{weatherData.wind.speed ?? 0} m/s</span>
             </div>
           </div>
           <div className="list-item-wrapper">
