@@ -21,7 +21,6 @@ function SearchHistory() {
 
   useEffect(() => {
     const decryptedData = retrievedData ? decryptData(retrievedData) : null;
-    console.log("decryptedData:", decryptedData);
     if (decryptedData) {
       const jsonData = JSON.parse(decryptedData);
       setHistoryItems(jsonData);

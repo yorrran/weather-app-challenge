@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import "@/styles/forecastweather.less";
 import ForecastListItem from "./ForecastListItem";
@@ -10,7 +9,6 @@ import { Spin } from "antd";
 
 function Forecast() {
   const [forecastWeather, setForecastWeather] = useState({});
-  const [date, setDate] = useState("");
   const forecastData: Array<ICurrentWeather> = useSelector(
     (state: RootState) => state.forecastSlice.list
   );
@@ -32,7 +30,7 @@ function Forecast() {
             Object.keys(forecastWeather as { [key: string]: any }).map(
               (forecastKey: string, index: number) => (
                 <ForecastListItem
-                key={forecastKey}
+                  key={forecastKey}
                   props={
                     (forecastWeather as { [key: string]: any })[forecastKey]
                   }

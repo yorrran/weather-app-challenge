@@ -51,12 +51,12 @@ function SearchBar() {
   };
 
   const onSearch = async () => {
-    if(!inputValue){
+    if (!inputValue) {
       messageApi.open({
-        type: 'error',
-        content: 'Please select location',
+        type: "error",
+        content: "Please select location"
       });
-      return
+      return;
     }
     if (url !== "/home" && !!inputValue) {
       navigate({
@@ -110,7 +110,12 @@ function SearchBar() {
     <>
       {contextHolder}
       <div className="search-bar-container">
-        <img src={locationLogo} className="location-logo" onClick={onclick} />
+        <img
+          src={locationLogo}
+          className="location-logo"
+          onClick={onclick}
+          alt="location-logo"
+        />
         <Input
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}

@@ -1,9 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState: { currLoading: boolean, forecastLoading:boolean } = {
+const initialState: { currLoading: boolean; forecastLoading: boolean } = {
   currLoading: false,
   forecastLoading: false
-
 };
 
 export const loadingSlice = createSlice({
@@ -26,6 +25,11 @@ export const loadingSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { setCurrentLoading, unsetCurrentLoading, setForecastLoading, unsetForecastLoading } = loadingSlice.actions;
+export const {
+  setCurrentLoading,
+  unsetCurrentLoading,
+  setForecastLoading,
+  unsetForecastLoading
+} = loadingSlice.actions;
 
 export default loadingSlice.reducer;

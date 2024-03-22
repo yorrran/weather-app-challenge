@@ -3,11 +3,11 @@ import { SearchOutlined } from "@ant-design/icons";
 import "@/styles/listitem.less";
 import deletedark from "@/assets/delete-dark.svg";
 import { useState } from "react";
-import { createSearchParams, useNavigate } from "react-router-dom"
+import { createSearchParams, useNavigate } from "react-router-dom";
 
 function ListItem({ historyItem, handleDelete }: any) {
   const [open, setOpen] = useState(false);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const onSearch = () => {
     console.log("search");
@@ -20,7 +20,7 @@ function ListItem({ historyItem, handleDelete }: any) {
   };
 
   const onClick = () => {
-    setOpen(true)
+    setOpen(true);
   };
 
   const hideModal = () => {
@@ -45,7 +45,13 @@ function ListItem({ historyItem, handleDelete }: any) {
           />
           <Button
             shape="circle"
-            icon={<img src={deletedark} className="list-item-icon" />}
+            icon={
+              <img
+                src={deletedark}
+                className="list-item-icon"
+                alt="list-item-icon"
+              />
+            }
             onClick={onClick}
           />
         </div>

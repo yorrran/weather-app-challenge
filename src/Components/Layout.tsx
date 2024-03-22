@@ -7,9 +7,6 @@ import { Suspense } from 'react';
 import { Outlet } from 'react-router';
 import SearchBar from './SearchBar';
 
-const { Sider, Content } = Layout;
-const WIDTH = 992;
-
 const LayoutPage: FC = () => {
     return (
         <Layout className="layout-page">

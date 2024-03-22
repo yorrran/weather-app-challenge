@@ -31,7 +31,7 @@ function TodayWeather() {
     const customStyle = {
       transform: rotateValue,
       width: "1rem",
-      height: "1rem",
+      height: "1rem"
     };
     return customStyle;
   };
@@ -64,8 +64,14 @@ function TodayWeather() {
           <div className="list-item-wrapper">
             <div className="list-item-title">Winds</div>
             <div className="list-item-value">
-              <img src={arrow} style={getStyle(weatherData.wind.deg)} alt="arrow-icon" />
-              <span className="list-item-right">{weatherData.wind.speed ?? 0} m/s</span>
+              <img
+                src={arrow}
+                style={getStyle(weatherData.wind.deg)}
+                alt="arrow-icon"
+              />
+              <span className="list-item-right">
+                {weatherData.wind.speed ?? 0} m/s
+              </span>
             </div>
           </div>
           <div className="list-item-wrapper">

@@ -7,7 +7,7 @@ const initialState: ICurrentWeather = {
   wind: { speed: 0, deg: 0 },
   visibility: 0,
   weather: [],
-  dt_txt:""
+  dt_txt: ""
 };
 
 export const weatherSlice = createSlice({

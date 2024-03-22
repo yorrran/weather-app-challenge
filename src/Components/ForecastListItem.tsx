@@ -22,13 +22,17 @@ function ForecastListItem({ props }: any) {
     <div className="forecast-list-wrapper">
       <div className="forecast-list-title">{title}</div>
       {data &&
-        data.map((item: any, index:number) => (
+        data.map((item: any, index: number) => (
           <div className="forecast-list-content" key={index}>
             <div className="forecast-list-left">
               <span className="forecast-list-time">
                 {convertToHour(item.dt_txt)}
               </span>
-              <img src={getIconUrl(item.weather[0])} className="weather-icon" />
+              <img
+                src={getIconUrl(item.weather[0])}
+                className="weather-icon"
+                alt="weather-icon"
+              />
               <span className="forecast-list-temperature">
                 {tempConverter(item.main.temp_min)}&nbsp;/&nbsp;
               </span>

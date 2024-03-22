@@ -1,4 +1,4 @@
-import { ICurrentWeather, IForecast } from "@/interfaces/weather";
+import { ICurrentWeather } from "@/interfaces/weather";
 import dayjs from "dayjs";
 
 const tempConverter = (temperature: number) => {
@@ -13,13 +13,6 @@ const visibilityConverter = (visibility: number) => {
 };
 
 export type DayKey = "day1" | "day2" | "day3" | "day4" | "day5";
-type DayMap = {
-  day1: string;
-  day2: string;
-  day3: string;
-  day4: string;
-  day5: string;
-};
 const convertToDays = (forecastData: Array<ICurrentWeather>) => {
   const forecastList = forecastData;
   const dayMap = {

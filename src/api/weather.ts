@@ -1,4 +1,8 @@
-import { IArrayLocation, ICurrentWeather, IForecast } from "@/interfaces/weather";
+import {
+  IArrayLocation,
+  ICurrentWeather,
+  IForecast
+} from "@/interfaces/weather";
 import request from "./index";
 
 export const getGeoLocation = (location: String) => {
