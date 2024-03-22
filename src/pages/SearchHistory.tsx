@@ -1,5 +1,5 @@
 import { getGeoLocation } from "@/api/weather";
-import { Button, Input } from "antd";
+import { Button, Input, message } from "antd";
 import { useEffect, useState } from "react";
 import { IArrayLocation } from "@/interfaces/weather";
 import "@/styles/searchhistory.less";
@@ -18,6 +18,7 @@ function SearchHistory() {
   const retrievedData = localStorage.getItem("weathersearch");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const [messageApi, contextHolder] = message.useMessage();
 
   useEffect(() => {
     const decryptedData = retrievedData ? decryptData(retrievedData) : null;
@@ -30,21 +31,27 @@ function SearchHistory() {
   const onSearch = async () => {
     setLoading(true);
     try {
-      const res = await getGeoLocation(inputValue);
+      const res = await getGeoLocation(inputValue.trim());
       const localData: IArrayLocation = res.data;
       if (localData.length <= 0) {
-        setError("location input not correct");
-        throw Error("location input not correct");
+        setError("Invalid country or city");
+        throw Error("Invalid country or city");
       }
-      saveToBrowser(inputValue);
+      saveToBrowser(inputValue.trim());
       navigate({
         pathname: "/home",
         search: createSearchParams({
-          location: inputValue
+          location: inputValue.trim()
         }).toString()
       });
-    } catch (e) {
+    } catch (e: any) {
       console.log("e:", e);
+      if (e.isAxiosError) {
+        messageApi.open({
+          type: "error",
+          content: e.toString()
+        });
+      }
     } finally {
       setLoading(false);
     }
@@ -79,41 +86,44 @@ function SearchHistory() {
   };
 
   return (
-    <div className="search-history-container">
-      <div className="search-history-bar">
-        <div className="search-input-wrapper">
-          <Input
-            value={inputValue}
-            onChange={(e) => {
-              setInputValue(e.target.value);
-              setError("");
-            }}
-            size="large"
-            placeholder="Search country or city here"
-          />
-          {error && <div className="error-message">{error}</div>}
+    <>
+      {contextHolder}
+      <div className="search-history-container">
+        <div className="search-history-bar">
+          <div className="search-input-wrapper">
+            <Input
+              value={inputValue}
+              onChange={(e) => {
+                setInputValue(e.target.value);
+                setError("");
+              }}
+              size="large"
+              placeholder="Search country or city here"
+            />
+            {error && <div className="error-message">{error}</div>}
+          </div>
+          <Button type="primary" onClick={onSearch} loading={loading}>
+            Search
+          </Button>
         </div>
-        <Button type="primary" onClick={onSearch} loading={loading}>
-          Search
-        </Button>
-      </div>
-      <div className="search-history-list">
-        <div className="search-history-title">Search History</div>
-        <div className="search-list-wrapper">
-          {historyItems && historyItems.length ? (
-            historyItems.map((historyItem: any) => (
-              <ListItem
-                key={historyItem.id}
-                historyItem={historyItem}
-                handleDelete={onDelete}
-              />
-            ))
-          ) : (
-            <></>
-          )}
+        <div className="search-history-list">
+          <div className="search-history-title">Search History</div>
+          <div className="search-list-wrapper">
+            {historyItems && historyItems.length ? (
+              historyItems.map((historyItem: any) => (
+                <ListItem
+                  key={historyItem.id}
+                  historyItem={historyItem}
+                  handleDelete={onDelete}
+                />
+              ))
+            ) : (
+              <></>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 

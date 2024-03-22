@@ -44,7 +44,7 @@ function SearchBar() {
       setInputValue(location);
       onCurrWeatherSearch(location);
     }
-  }, [url]);
+  }, [location]);
 
   const onclick = () => {
     navigate("/search-history");
