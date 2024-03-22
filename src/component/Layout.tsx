@@ -10,7 +10,9 @@ import SearchBar from './SearchBar';
 const LayoutPage: FC = () => {
     return (
         <Layout className="layout-page">
+            <div className="layout-top">
             <SearchBar />
+            </div>
             <div className="layout-page-content">
                 <Suspense fallback={null}>
                     <div
