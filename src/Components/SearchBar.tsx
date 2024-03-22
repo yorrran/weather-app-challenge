@@ -1,8 +1,8 @@
 import "../styles/searchbar.less";
-import { Button, Input } from "antd";
+import { Button, Input, message } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
-import { useState } from "react";
-import { useNavigate } from "react-router";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router";
 import locationLogo from "../assets/location.svg";
 import {
   getCurrentWeather,
@@ -24,7 +24,7 @@ import {
   unsetForecastLoading
 } from "@/stores/loading";
 import { updateForecastWeather } from "@/stores/forecast";
-
+import { createSearchParams, useSearchParams } from "react-router-dom";
 
 function SearchBar() {
   const [inputValue, setInputValue] = useState("");
@@ -33,12 +33,43 @@ function SearchBar() {
   const loading = useSelector(
     (state: RootState) => state.loadingSlice.forecastLoading
   );
+  const [messageApi, contextHolder] = message.useMessage();
+  const [searchParam] = useSearchParams();
+  const location = searchParam.get("location");
+  const routeLocation = useLocation();
+  const url = routeLocation.pathname;
+
+  useEffect(() => {
+    if (location) {
+      setInputValue(location);
+      onCurrWeatherSearch(location);
+    }
+  }, [url]);
 
   const onclick = () => {
     navigate("/search-history");
   };
 
   const onSearch = async () => {
+    if(!inputValue){
+      messageApi.open({
+        type: 'error',
+        content: 'Please select location',
+      });
+      return
+    }
+    if (url !== "/home" && !!inputValue) {
+      navigate({
+        pathname: "/home",
+        search: createSearchParams({
+          location: inputValue
+        }).toString()
+      });
+    }
+    onCurrWeatherSearch(inputValue);
+  };
+
+  const onCurrWeatherSearch = async (inputValue: String) => {
     try {
       dispatch(setForecastLoading());
       dispatch(setCurrentLoading());
@@ -52,9 +83,13 @@ function SearchBar() {
       const weatherData: ICurrentWeather = res1.data;
       dispatch(updateCurrentWeather(weatherData));
       dispatch(unsetCurrentLoading());
-      onForecastSearch(lon, lat);
-    } catch (e) {
+      await onForecastSearch(lon, lat);
+    } catch (e: any) {
       console.log("e:", e);
+      messageApi.open({
+        type: "error",
+        content: e.toString()
+      });
       dispatch(unsetCurrentLoading());
     } finally {
       dispatch(unsetForecastLoading());
@@ -72,20 +107,24 @@ function SearchBar() {
   };
 
   return (
-    <div className="search-bar-container">
-      <img src={locationLogo} className="location-logo" onClick={onclick} />
-      <Input
-        value={inputValue}
-        onChange={(e) => setInputValue(e.target.value)}
-        size="large"
-      />
-      <Button
-        type="text"
-        icon={<SearchOutlined />}
-        onClick={onSearch}
-        loading={loading}
-      />
-    </div>
+    <>
+      {contextHolder}
+      <div className="search-bar-container">
+        <img src={locationLogo} className="location-logo" onClick={onclick} />
+        <Input
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+          size="large"
+          disabled={true}
+        />
+        <Button
+          type="text"
+          icon={<SearchOutlined />}
+          onClick={onSearch}
+          loading={loading}
+        />
+      </div>
+    </>
   );
 }
 

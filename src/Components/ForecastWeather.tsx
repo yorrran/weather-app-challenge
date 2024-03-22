@@ -4,7 +4,7 @@ import "@/styles/forecastweather.less";
 import ForecastListItem from "./ForecastListItem";
 import { useSelector } from "react-redux";
 import { RootState } from "@/stores";
-import { DayKey, convertToDays } from "@/utils/TempConverter";
+import { convertToDays } from "@/utils/TempConverter";
 import { ICurrentWeather } from "@/interfaces/weather";
 import { Spin } from "antd";
 
@@ -20,7 +20,6 @@ function Forecast() {
 
   useEffect(() => {
     const res: any = convertToDays(forecastData);
-    console.log("res:", forecastData);
     setForecastWeather(res);
   }, [forecastData]);
 
@@ -31,8 +30,9 @@ function Forecast() {
         <Spin spinning={loading}>
           {forecastWeather &&
             Object.keys(forecastWeather as { [key: string]: any }).map(
-              (forecastKey: string) => (
+              (forecastKey: string, index: number) => (
                 <ForecastListItem
+                key={forecastKey}
                   props={
                     (forecastWeather as { [key: string]: any })[forecastKey]
                   }

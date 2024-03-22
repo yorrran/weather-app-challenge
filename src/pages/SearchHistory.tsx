@@ -6,6 +6,8 @@ import "@/styles/searchhistory.less";
 import ListItem from "@/Components/ListItem";
 import { nanoid } from "@reduxjs/toolkit";
 import { decryptData, encryptData } from "@/utils/Encrypt";
+import { useNavigate } from "react-router";
+import { createSearchParams } from "react-router-dom";
 
 function SearchHistory() {
   const [inputValue, setInputValue] = useState("");
@@ -14,6 +16,8 @@ function SearchHistory() {
     Array<{ id: string; location: string }>
   >([]);
   const retrievedData = localStorage.getItem("weathersearch");
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const decryptedData = retrievedData ? decryptData(retrievedData) : null;
@@ -30,9 +34,16 @@ function SearchHistory() {
       const res = await getGeoLocation(inputValue);
       const localData: IArrayLocation = res.data;
       if (localData.length <= 0) {
+        setError("location input not correct");
         throw Error("location input not correct");
       }
       saveToBrowser(inputValue);
+      navigate({
+        pathname: "/home",
+        search: createSearchParams({
+          location: inputValue
+        }).toString()
+      });
     } catch (e) {
       console.log("e:", e);
     } finally {
@@ -51,7 +62,19 @@ function SearchHistory() {
       id: nanoid(),
       location: inputValue
     });
-    console.log("filteredData:", filteredData);
+    const entryptedData = encryptData(JSON.stringify(filteredData));
+    localStorage.setItem("weathersearch", entryptedData);
+  };
+
+  const onDelete = (deleteData: { id: string; location: string }) => {
+    const filteredData =
+      historyItems.length > 0
+        ? historyItems.filter(
+            (item) =>
+              item.location.toLowerCase() !== deleteData.location.toLowerCase()
+          )
+        : [];
+    setHistoryItems(filteredData);
     const entryptedData = encryptData(JSON.stringify(filteredData));
     localStorage.setItem("weathersearch", entryptedData);
   };
@@ -59,12 +82,18 @@ function SearchHistory() {
   return (
     <div className="search-history-container">
       <div className="search-history-bar">
-        <Input
-          value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
-          size="large"
-          placeholder="Search country or city here"
-        />
+        <div className="search-input-wrapper">
+          <Input
+            value={inputValue}
+            onChange={(e) => {
+              setInputValue(e.target.value);
+              setError("");
+            }}
+            size="large"
+            placeholder="Search country or city here"
+          />
+          {error && <div className="error-message">{error}</div>}
+        </div>
         <Button type="primary" onClick={onSearch} loading={loading}>
           Search
         </Button>
@@ -74,7 +103,11 @@ function SearchHistory() {
         <div className="search-list-wrapper">
           {historyItems && historyItems.length ? (
             historyItems.map((historyItem: any) => (
-              <ListItem key={historyItem.id} historyItem={historyItem} />
+              <ListItem
+                key={historyItem.id}
+                historyItem={historyItem}
+                handleDelete={onDelete}
+              />
             ))
           ) : (
             <></>
