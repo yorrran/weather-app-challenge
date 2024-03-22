@@ -3,7 +3,7 @@ import { Button, Input } from "antd";
 import { useEffect, useState } from "react";
 import { IArrayLocation } from "@/interfaces/weather";
 import "@/styles/searchhistory.less";
-import ListItem from "@/component/ListItem";
+import ListItem from "@/components/ListItem";
 import { nanoid } from "@reduxjs/toolkit";
 import { decryptData, encryptData } from "@/utils/Encrypt";
 import { useNavigate } from "react-router";

@@ -4,7 +4,7 @@ import { Navigate } from "react-router";
 import { useRoutes } from "react-router-dom";
 
 import Home from "@/pages/Home";
-import LayoutPage from "@/component/Layout";
+import LayoutPage from "@/components/Layout";
 import SearchHistory from "@/pages/SearchHistory";
 
 // import WrapperRouteComponent from './config';

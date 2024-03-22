@@ -35,5 +35,3 @@ export interface IForecast {
 }
 
 export type IArrayLocation = Array<ILocation>;
-
-export type ILocationResponse = AxiosPromise<AxiosResponse<ILocation>>;

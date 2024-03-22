@@ -1,5 +1,5 @@
-import Forecast from "@/component/ForecastWeather";
-import TodayWeather from "@/component/TodayWeather";
+import Forecast from "@/components/ForecastWeather";
+import TodayWeather from "@/components/TodayWeather";
 import "@/styles/home.less";
 function Home() {
   return (

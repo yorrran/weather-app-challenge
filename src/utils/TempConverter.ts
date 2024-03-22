@@ -1,6 +1,7 @@
 import { ICurrentWeather } from "@/interfaces/weather";
 import dayjs from "dayjs";
 
+//the available temperature from response are more than hundred, divide by 10 to make it within 100
 const tempConverter = (temperature: number) => {
   const convertedRes: number = temperature / 10;
   const fixDecimalTemperature = convertedRes.toFixed(1);
