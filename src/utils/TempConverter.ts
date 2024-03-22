@@ -23,7 +23,7 @@ const convertToDays = (forecastData: Array<ICurrentWeather>) => {
     day4: dayjs().add(3, "day").format("DD MMMM"),
     day5: dayjs().add(4, "day").format("DD MMMM")
   };
-  const res:any = {
+  const res: any = {
     day1: { title: "Today", data: [] },
     day2: { title: dayMap.day2, data: [] },
     day3: { title: dayMap.day3, data: [] },
@@ -54,9 +54,9 @@ const findDayForTimestamp = (
   return null;
 };
 
-const convertToHour=(dateTime:string)=>{
-  const hour = dayjs(dateTime).format("HH:mm")
-  return hour
-}
+const convertToHour = (dateTime: string) => {
+  const hour = dayjs(dateTime).format("HH:mm");
+  return hour;
+};
 
 export { tempConverter, visibilityConverter, convertToDays, convertToHour };
