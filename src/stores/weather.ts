@@ -6,7 +6,8 @@ const initialState: ICurrentWeather = {
   main: { temp: undefined, humidity: 0 },
   wind: { speed: 0, deg: 0 },
   visibility: 0,
-  weather: []
+  weather: [],
+  dt_txt:""
 };
 
 export const weatherSlice = createSlice({
@@ -17,7 +18,7 @@ export const weatherSlice = createSlice({
       state.main = { ...action.payload.main };
       state.wind = { ...action.payload.wind };
       state.visibility = action.payload.visibility;
-      state.weather = action.payload.weather;
+      state.weather = JSON.parse(JSON.stringify(action.payload.weather));
     }
   }
 });

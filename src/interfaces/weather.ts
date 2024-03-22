@@ -15,7 +15,7 @@ interface IWind {
   deg: number;
 }
 
-interface IWeather {
+export interface IWeather {
   description: string;
   icon: string;
   id: number;
@@ -27,6 +27,11 @@ export interface ICurrentWeather {
   wind: IWind;
   visibility: number;
   weather: Array<IWeather>;
+  dt_txt: string;
+}
+
+export interface IForecast {
+  list: Array<ICurrentWeather>;
 }
 
 export type IArrayLocation = Array<ILocation>;

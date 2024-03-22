@@ -1,24 +1,31 @@
 import { createSlice } from "@reduxjs/toolkit";
-import type { PayloadAction } from "@reduxjs/toolkit";
 
-const initialState: { loading: boolean } = {
-  loading: false
+const initialState: { currLoading: boolean, forecastLoading:boolean } = {
+  currLoading: false,
+  forecastLoading: false
+
 };
 
 export const loadingSlice = createSlice({
   name: "loadingSlice",
   initialState,
   reducers: {
-    setLoading: (state) => {
-      state.loading = true;
+    setCurrentLoading: (state) => {
+      state.currLoading = true;
     },
-    unSetLoading: (state) => {
-      state.loading = false;
+    unsetCurrentLoading: (state) => {
+      state.currLoading = false;
+    },
+    setForecastLoading: (state) => {
+      state.forecastLoading = true;
+    },
+    unsetForecastLoading: (state) => {
+      state.forecastLoading = false;
     }
   }
 });
 
 // Action creators are generated for each case reducer function
-export const { setLoading, unSetLoading } = loadingSlice.actions;
+export const { setCurrentLoading, unsetCurrentLoading, setForecastLoading, unsetForecastLoading } = loadingSlice.actions;
 
 export default loadingSlice.reducer;
